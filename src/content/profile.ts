@@ -18,9 +18,9 @@ export const profile = {
 
   headline: "Software Engineer building backend systems, intelligent workflows and reliable infrastructure.",
   intro:
-    "Software Engineer at Karios, Hyderabad. I build Go services and REST APIs, multi-tenant authentication across LDAP, OIDC and SAML, and Temporal-driven VM migration workflows — and I validate them end to end, failure paths included.",
+    "Software Engineer at Karios, Hyderabad. I build Go services and REST APIs, multi-tenant authentication across LDAP, OIDC and SAML, and distributed workflows with Temporal — and I test them end to end, failure paths included.",
 
-  focus: ["Go · REST APIs", "LDAP · OIDC · SAML", "Temporal workflows", "Proxmox · FreeBSD", "2× OCI Professional 2025"],
+  focus: ["Go · REST APIs", "LDAP · OIDC · SAML", "Temporal workflows", "Proxmox · CloudStack", "2× OCI Professional 2025"],
 
   about: [
     "Computer Science graduate from Vasavi College of Engineering, Hyderabad — and since December 2025, a backend engineer on a cloud infrastructure and virtualization platform at Karios.",

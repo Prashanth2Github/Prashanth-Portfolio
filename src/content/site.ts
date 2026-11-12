@@ -15,5 +15,5 @@ export type SectionId = (typeof sections)[number]["id"];
 export const seo = {
   title: "Prashanth Bonkuru — Software Engineer",
   description:
-    "Software Engineer at Karios, Hyderabad — Go services and REST APIs, multi-tenant authentication (LDAP, OIDC, SAML), Temporal VM migration workflows and cloud infrastructure.",
+    "Software Engineer at Karios, Hyderabad — Go services and REST APIs, multi-tenant authentication (LDAP, OIDC, SAML), Temporal workflows, VM migration and cloud infrastructure.",
 };
