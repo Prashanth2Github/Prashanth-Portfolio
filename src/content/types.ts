@@ -1,6 +1,6 @@
 /**
  * Content types. Every factual field in /src/content is sourced from
- * Prashanth_Resume (2).pdf, Prashanth_Certifications.pdf, or Prashanth's own brief.
+ * Prashanth_Resume3.pdf and Prashanth_Certifications.pdf.
  * Fields that come only from the brief (not the résumé) are marked `source: "brief"`.
  */
 

@@ -61,7 +61,7 @@ export function About() {
           <h3 className="label mb-3 text-faint">Outside the stack</h3>
           <ul className="grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
             {profile.beyond.map((b) => (
-              <li key={b.title} className="bg-bg p-5 md:p-6">
+              <li key={b.title} className={"wide" in b && b.wide ? "bg-bg p-5 sm:col-span-2 md:p-6 lg:col-span-4" : "bg-bg p-5 md:p-6"}>
                 <p className="display text-[1.125rem] leading-tight font-semibold">{b.title}</p>
                 <p className="mt-2 text-[0.9375rem] leading-snug text-muted">{b.text}</p>
               </li>

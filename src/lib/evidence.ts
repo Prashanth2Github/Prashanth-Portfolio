@@ -9,7 +9,7 @@ export function resolveEvidence(ref: EvidenceRef): ResolvedEvidence {
   switch (ref.kind) {
     case "workstream": {
       const ws = allWorkstreams.find((w) => w.id === ref.id);
-      return { kind: ref.kind, label: ws?.title ?? ref.id, context: `Karios AI · ${ws?.code ?? ""}`, href: `#${ref.id}` };
+      return { kind: ref.kind, label: ws?.title ?? ref.id, context: `Karios · ${ws?.code ?? ""}`, href: `#${ref.id}` };
     }
     case "project": {
       const p = projects.find((x) => x.id === ref.id);

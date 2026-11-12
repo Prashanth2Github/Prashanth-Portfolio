@@ -17,7 +17,7 @@ test("home renders with identity, metadata and no console errors", async ({ page
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1, name: "Prashanth Bonkuru" })).toBeVisible();
   await expect(page).toHaveTitle("Prashanth Bonkuru — Software Engineer");
-  await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /Karios AI/);
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /Software Engineer at Karios/);
   await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(1);
   for (const s of sections) await expect(page.locator(`#${s.id}`)).toHaveCount(1);
   await page.waitForTimeout(1500);
@@ -63,7 +63,7 @@ test("JSON endpoint returns the API view payload", async ({ request }) => {
   expect(res.status()).toBe(200);
   const body = await res.json();
   expect(body.metadata.name).toBe("Prashanth Bonkuru");
-  expect(body.spec.current.company).toBe("Karios AI");
+  expect(body.spec.current.company).toBe("Karios");
 });
 
 test("navigation reaches every section", async ({ page }) => {

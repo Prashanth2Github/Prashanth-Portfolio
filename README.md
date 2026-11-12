@@ -65,6 +65,6 @@ tests/            Playwright end-to-end suite
 
 ## Accuracy notes
 
-- Content is sourced from the résumé and certificate PDFs. k6 and CI/CD come from Prashanth's own brief and are not yet on the résumé (marked `source: "brief"` in `experience.ts`).
+- Content is sourced from the résumé and certificate PDFs. Current sources: `Prashanth_Resume3.pdf` and `Prashanth_Certifications.pdf`.
 - The simulations are conceptual models built from standard concepts. They contain no employer-internal services, endpoints, customers or architecture.
 - The hero event stream is labelled on-screen as a simulation.

@@ -22,7 +22,7 @@ export function Experience() {
             <span className="text-muted">as engineering case files.</span>
           </>
         }
-        note="Seven workstreams from my role at Karios AI — each opened up as problem, contribution, approach and how it was validated."
+        note="Seven workstreams from my role at Karios — each opened up as problem, contribution, approach and how it was validated."
       />
 
       <Reveal as="article" className="pane brackets" >

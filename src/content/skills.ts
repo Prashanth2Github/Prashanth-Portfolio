@@ -5,7 +5,7 @@ const pr = (id: string): EvidenceRef => ({ kind: "project", id });
 const cr = (id: string): EvidenceRef => ({ kind: "credential", id });
 const note = (text: string): EvidenceRef => ({ kind: "note", text });
 
-/** Skills come from the TECHNICAL SKILLS section of the résumé (plus Node.js, k6 and CI/CD from the brief).
+/** Skills come from the TECHNICAL SKILLS section of the résumé (Node.js and Express from the MERN project stack).
  *  Evidence only points at work that actually used the skill. No ratings, by design. */
 export const skillCategories: SkillCategory[] = [
   {
@@ -19,6 +19,8 @@ export const skillCategories: SkillCategory[] = [
       { name: "SQL", evidence: [ws("ws-backend"), ws("ws-events"), pr("vehicle-rental-system")] },
       { name: "JavaScript", evidence: [pr("smart-deadline-notifier")] },
       { name: "C", evidence: [note("Core programming language — listed on résumé")] },
+      { name: "OOP", evidence: [pr("vehicle-rental-system"), cr("cisco-pcap")] },
+      { name: "Data structures & algorithms", evidence: [note("Core concept — listed on résumé")] },
     ],
   },
   {
@@ -80,7 +82,9 @@ export const skillCategories: SkillCategory[] = [
       { name: "Virtualization", evidence: [ws("ws-infra"), ws("ws-migration")] },
       { name: "Virtual machines", evidence: [ws("ws-infra"), ws("ws-migration")] },
       { name: "Proxmox", evidence: [ws("ws-infra"), ws("ws-migration")] },
+      { name: "Apache CloudStack", evidence: [ws("ws-infra")] },
       { name: "FreeBSD", evidence: [ws("ws-infra")] },
+      { name: "ZFS", evidence: [note("Listed on résumé")] },
       { name: "Cloud infrastructure", evidence: [ws("ws-infra"), cr("oci-genai"), cr("oci-ds")] },
       { name: "Linux", evidence: [ws("ws-delivery"), ws("ws-infra")] },
     ],
@@ -94,6 +98,7 @@ export const skillCategories: SkillCategory[] = [
       { name: "End-to-end testing", evidence: [ws("ws-testing")] },
       { name: "API testing", evidence: [ws("ws-testing"), ws("ws-events")] },
       { name: "Functional testing", evidence: [{ kind: "note", text: "Tester Intern · Wyreflow Technologies" }] },
+      { name: "Performance testing", evidence: [ws("ws-testing")] },
       { name: "k6", evidence: [ws("ws-testing")] },
       { name: "CI/CD", evidence: [ws("ws-delivery")] },
       { name: "Debugging", evidence: [ws("ws-testing"), ws("ws-backend")] },
@@ -108,6 +113,8 @@ export const skillCategories: SkillCategory[] = [
       { name: "GitHub", evidence: [ws("ws-delivery")] },
       { name: "Pull requests & code review", evidence: [ws("ws-delivery")] },
       { name: "WSL", evidence: [ws("ws-delivery")] },
+      { name: "Jenkins", evidence: [ws("ws-delivery")] },
+      { name: "Docker", evidence: [note("Listed on résumé")] },
       { name: "VS Code", evidence: [note("Primary editor")] },
     ],
   },
