@@ -33,7 +33,7 @@ function Deadline({ on }: { on: boolean }) {
       label="Task priority / LSTM"
       foot={
         <>
-          <span className="status-dot text-signal" aria-hidden="true" /> pattern learned → reminder scheduled
+          <span className="state text-signal" aria-hidden="true" /> pattern learned → reminder scheduled
         </>
       }
     >
@@ -87,7 +87,7 @@ function Rental({ on, reduce }: { on: boolean; reduce: boolean | null }) {
               animate={{ opacity: on ? 1 : 0, y: on ? 0 : 10 }}
               transition={{ delay: 0.1 * i, duration: 0.6, ease }}
             >
-              <span className="label text-signal">0{i + 1}</span>
+              <span className="label tabular-nums">0{i + 1}</span>
               <span className="font-mono text-[0.75rem] leading-tight break-words text-ink">{s}</span>
             </m.div>
           ))}

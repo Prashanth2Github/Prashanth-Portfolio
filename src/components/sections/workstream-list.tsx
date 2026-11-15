@@ -50,10 +50,10 @@ export function WorkstreamList({ items }: { items: Workstream[] }) {
                 aria-expanded={isOpen}
                 aria-controls={`${ws.id}-panel`}
                 onClick={() => toggle(ws.id)}
-                className="grid w-full grid-cols-[3.75rem_1fr_auto] items-center gap-4 py-5 text-left transition-colors hover:bg-surface/60 sm:grid-cols-[5rem_1fr_auto] md:py-6 lg:grid-cols-[6rem_minmax(0,1fr)_minmax(0,0.9fr)_auto]"
+                className="grid w-full grid-cols-[3.75rem_1fr_auto] items-center gap-4 py-5 text-left transition-colors hover:bg-surface/50 sm:grid-cols-[5rem_1fr_auto] md:py-6 lg:grid-cols-[6rem_minmax(0,1fr)_minmax(0,0.9fr)_auto]"
               >
-                <span className={cn("label pl-1 transition-colors", isOpen ? "text-signal" : "text-faint group-hover/ws:text-signal")}>{ws.code}</span>
-                <span className="display text-[clamp(1.25rem,2.2vw,1.75rem)] leading-tight font-semibold">{ws.title}</span>
+                <span className={cn("label pl-1 transition-colors", isOpen ? "text-ink" : "text-faint group-hover/ws:text-muted")}>{ws.code}</span>
+                <span className="display text-[clamp(1.25rem,2.2vw,1.75rem)] leading-tight font-medium">{ws.title}</span>
                 <span className="hidden flex-wrap gap-1.5 lg:flex" aria-hidden="true">
                   {ws.tech.slice(0, 4).map((t) => (
                     <span key={t} className="chip text-muted">
@@ -64,8 +64,8 @@ export function WorkstreamList({ items }: { items: Workstream[] }) {
                 <span
                   aria-hidden="true"
                   className={cn(
-                    "mr-1 flex size-9 items-center justify-center border transition-all duration-300",
-                    isOpen ? "rotate-45 border-signal bg-signal text-bg" : "border-line text-ink group-hover/ws:border-line-strong",
+                    "mr-1 flex size-9 items-center justify-center rounded-lg border transition-[color,background-color,border-color] duration-150 [&>svg]:transition-transform [&>svg]:duration-200",
+                    isOpen ? "border-line-strong bg-surface-2 text-ink [&>svg]:rotate-45" : "border-line text-muted group-hover/ws:border-line-strong group-hover/ws:text-ink",
                   )}
                 >
                   <Plus size={16} />
@@ -78,21 +78,21 @@ export function WorkstreamList({ items }: { items: Workstream[] }) {
               aria-label={ws.title}
               initial={false}
               animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
-              transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               className="overflow-hidden"
               inert={!isOpen}
             >
-              <div className="grid gap-px bg-line pb-px md:grid-cols-2 xl:grid-cols-4">
+              <div className="grid gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-2 xl:grid-cols-4">
                 {columns.map((col, i) => (
                   <div key={col.key} className="bg-bg p-5 md:p-6">
                     <p className="label mb-3 flex items-center gap-2">
-                      <span className="text-signal">0{i + 1}</span> {col.label}
+                      <span className="tabular-nums">0{i + 1}</span> <span className="text-muted">{col.label}</span>
                     </p>
                     {col.key === "approach" ? (
                       <ul className="space-y-2.5">
                         {ws.approach.map((a) => (
                           <li key={a} className="grid grid-cols-[0.75rem_1fr] gap-2 text-[0.9375rem] leading-relaxed text-muted">
-                            <span aria-hidden="true" className="mt-[0.6em] size-1.5 bg-signal" />
+                            <span aria-hidden="true" className="mt-[0.65em] size-1 rounded-[1px] bg-faint" />
                             {a}
                           </li>
                         ))}
@@ -116,9 +116,9 @@ export function WorkstreamList({ items }: { items: Workstream[] }) {
                       e.preventDefault();
                       scrollToId(ws.simulation!.id);
                     }}
-                    className="label ml-auto flex min-h-9 items-center gap-2 px-1 text-signal hover:text-ink"
+                    className="ml-auto flex min-h-9 items-center gap-2 px-1 text-[0.875rem] text-ink transition-colors hover:text-muted"
                   >
-                    Explore it: {ws.simulation.label} <ArrowRight size={14} />
+                    Try the {ws.simulation.label.toLowerCase()} model <ArrowRight size={16} />
                   </a>
                 ) : null}
               </div>

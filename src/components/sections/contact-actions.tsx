@@ -15,8 +15,8 @@ export function ContactActions() {
   return (
     <div className="flex flex-wrap gap-3">
       <Magnetic>
-        <a href={`mailto:${profile.email}`} className="btn btn-primary">
-          <Mail size={15} /> Email me
+        <a href={`mailto:${profile.email}`} className="btn">
+          <Mail size={16} /> Email me
         </a>
       </Magnetic>
       <Magnetic>
@@ -30,24 +30,24 @@ export function ContactActions() {
             if (ok) window.setTimeout(() => setCopied(false), 2000);
           }}
         >
-          {copied ? <Check size={15} /> : <Copy size={15} />} {copied ? "Copied" : "Copy email"}
+          {copied ? <Check size={16} /> : <Copy size={16} />} {copied ? "Copied" : "Copy email"}
         </button>
       </Magnetic>
       <Magnetic>
         <a href={profile.linkedin} target="_blank" rel="noreferrer" className="btn">
-          <LinkedIn size={15} /> LinkedIn <ArrowUpRight size={14} className="btn-arrow" />
+          <LinkedIn size={16} /> LinkedIn <ArrowUpRight size={16} className="btn-arrow" />
         </a>
       </Magnetic>
       {profile.github ? (
         <Magnetic>
           <a href={profile.github} target="_blank" rel="noreferrer" className="btn">
-            <GitHub size={15} /> GitHub <ArrowUpRight size={14} className="btn-arrow" />
+            <GitHub size={16} /> GitHub <ArrowUpRight size={16} className="btn-arrow" />
           </a>
         </Magnetic>
       ) : null}
       <Magnetic>
         <a href={profile.resume} download={profile.resumeFileName} className="btn">
-          <Download size={15} /> Résumé
+          <Download size={16} /> Résumé
         </a>
       </Magnetic>
     </div>

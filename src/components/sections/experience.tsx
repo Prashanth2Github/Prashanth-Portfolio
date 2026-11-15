@@ -14,32 +14,26 @@ export function Experience() {
       <SectionHeading
         id="experience-title"
         number="01"
-        eyebrow="The work"
-        title={
-          <>
-            Experience,
-            <br />
-            <span className="text-muted">as engineering case files.</span>
-          </>
-        }
-        note="Seven workstreams from my role at Karios — each opened up as problem, contribution, approach and how it was validated."
+        eyebrow="Experience"
+        title="Backend engineering at Karios, in seven workstreams"
+        note="Each opens into the problem, my contribution, the approach and how it was validated. My testing internship at Wyreflow follows."
       />
 
       <Reveal as="article" className="pane brackets" >
         <header className="grid gap-6 border-b border-line p-5 md:grid-cols-12 md:items-end md:p-8">
           <div className="md:col-span-7">
             <p className="label mb-3 flex items-center gap-2.5">
-              <span className="status-dot text-signal" data-live aria-hidden="true" />
-              <span className="text-signal">Active</span>
+              <span className="state text-signal" aria-hidden="true" />
+              <span className="text-ink">Current role</span>
               <span className="text-faint">·</span> {current.start} — {current.end}
             </p>
-            <h3 className="display text-[clamp(2rem,4.2vw,3.5rem)] leading-none font-semibold" style={{ fontVariationSettings: '"wdth" 104' }}>
+            <h3 className="display text-[clamp(1.625rem,2.8vw,2.25rem)] leading-[1.1] tracking-[-0.025em]">
               {current.title}
-              <span className="text-muted"> @ {current.company}</span>
+              <span className="text-muted"> at {current.company}</span>
             </h3>
           </div>
           <div className="md:col-span-5 md:justify-self-end md:text-right">
-            <p className="max-w-md text-[1rem] leading-relaxed text-muted">{current.summary}</p>
+            <p className="max-w-md text-[0.9375rem] leading-relaxed text-muted">{current.summary}</p>
             <p className="label mt-3 text-faint">{current.location}</p>
           </div>
         </header>
@@ -57,7 +51,7 @@ export function Experience() {
             <p className="label mb-2 text-faint">
               {role.start} — {role.end}
             </p>
-            <h3 className="display text-[1.75rem] leading-tight font-semibold">{role.title}</h3>
+            <h3 className="display text-[1.75rem] leading-tight font-medium">{role.title}</h3>
             <p className="mt-1 text-muted">
               {role.company} · {role.location}
             </p>
@@ -72,8 +66,8 @@ export function Experience() {
           </ul>
           {role.evidence ? (
             <div className="md:col-span-2 md:justify-self-end">
-              <a href={role.evidence.href} target="_blank" rel="noopener" className="label flex min-h-9 items-center gap-2 text-ink hover:text-signal">
-                {role.evidence.label} <ArrowUpRight size={14} />
+              <a href={role.evidence.href} target="_blank" rel="noopener" className="label flex min-h-9 items-center gap-2 text-ink transition-colors hover:text-muted">
+                {role.evidence.label} <ArrowUpRight size={16} />
               </a>
             </div>
           ) : null}

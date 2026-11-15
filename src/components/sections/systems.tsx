@@ -12,15 +12,9 @@ export function Systems() {
         <SectionHeading
           id="systems-title"
           number="02"
-          eyebrow="Engineering through systems"
-          title={
-            <>
-              Systems connect.
-              <br />
-              <span className="text-muted">Explore how.</span>
-            </>
-          }
-          note="Interactive, conceptual models of the problems I work on — built from standard concepts, not from any employer's internal design."
+          eyebrow="Systems"
+          title="Interactive models of the systems I work on"
+          note="Conceptual models built from standard concepts, not from any employer’s internal design. Run a migration, force a failure, switch identity providers."
         />
 
         <Reveal>

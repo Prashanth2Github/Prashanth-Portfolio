@@ -9,7 +9,7 @@ import { resolveEvidence } from "@/lib/evidence";
 import { cn } from "@/lib/utils";
 
 const kindLabel = { workstream: "Work", project: "Project", credential: "Credential", note: "Résumé" } as const;
-const kindTone = { workstream: "text-signal border-signal/50", project: "text-info border-info/50", credential: "text-run border-run/50", note: "text-muted border-line-strong" } as const;
+const kindTone = { workstream: "text-muted border-line", project: "text-muted border-line", credential: "text-muted border-line", note: "text-faint border-line" } as const;
 
 export function SkillsExplorer() {
   const [catId, setCatId] = useState(skillCategories[0]!.id);
@@ -56,11 +56,11 @@ export function SkillsExplorer() {
                 onKeyDown={(e) => onTabKey(e, i)}
                 className={cn(
                   "relative flex shrink-0 items-center gap-3 border px-3 py-2.5 text-left transition-colors lg:border-0 lg:border-b lg:border-line lg:px-2 lg:py-4",
-                  active ? "border-signal text-ink lg:bg-surface" : "border-line text-muted hover:text-ink",
+                  active ? "border-line text-ink lg:bg-surface" : "border-line text-muted hover:text-ink",
                 )}
               >
-                {active ? <m.span layoutId="skill-tab-bar" aria-hidden="true" className="absolute top-0 bottom-0 left-0 hidden w-[2px] bg-signal lg:block" /> : null}
-                <span className={cn("label hidden lg:block", active ? "text-signal" : "text-faint")}>{String(i + 1).padStart(2, "0")}</span>
+                {active ? <m.span layoutId="skill-tab-bar" aria-hidden="true" className="absolute top-3 bottom-3 left-0 hidden w-[2px] rounded-full bg-ink lg:block" /> : null}
+                <span className={cn("label hidden lg:block", active ? "text-ink" : "text-faint")}>{String(i + 1).padStart(2, "0")}</span>
                 <span className="flex flex-col">
                   <span className="text-[0.9375rem] font-medium whitespace-nowrap">{c.label}</span>
                   <span className="label hidden text-faint normal-case lg:block">{c.blurb}</span>
@@ -76,7 +76,7 @@ export function SkillsExplorer() {
       <div id="skill-panel" role="tabpanel" aria-labelledby={`skilltab-${category.id}`} className="pane lg:col-span-8">
         <div className="pane-head">
           <p className="label">
-            <span className="text-signal">{category.label}</span>
+            <span className="text-ink">{category.label}</span>
           </p>
           <p className="label text-faint">No ratings · evidence only</p>
         </div>
@@ -101,8 +101,8 @@ export function SkillsExplorer() {
                       onClick={() => setSkillName(s.name)}
                       onMouseEnter={() => setSkillName(s.name)}
                       className={cn(
-                        "display min-h-12 border px-4 text-[clamp(1.0625rem,1.6vw,1.375rem)] font-semibold transition-all duration-200",
-                        active ? "border-signal bg-signal text-bg" : "border-line text-ink hover:border-line-strong hover:bg-surface-2",
+                        "min-h-10 rounded-lg border px-3.5 text-[0.9375rem] transition-[color,background-color,border-color] duration-150",
+                        active ? "border-ink bg-ink text-bg" : "border-line bg-surface-2 text-ink hover:border-line-strong",
                       )}
                     >
                       {s.name}
@@ -128,7 +128,7 @@ export function SkillsExplorer() {
                         <span className="block text-[0.9375rem] text-ink">{ev.label}</span>
                         <span className="label text-faint normal-case">{ev.context}</span>
                       </span>
-                      {ev.href ? <ArrowRight size={14} className="text-muted transition-transform group-hover:translate-x-1 group-hover:text-signal" /> : null}
+                      {ev.href ? <ArrowRight size={16} className="text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-ink" /> : null}
                     </>
                   );
                   return (

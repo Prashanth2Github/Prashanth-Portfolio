@@ -97,7 +97,7 @@ export async function POST(request: Request) {
 <p style="margin:0 0 4px"><strong>Email:</strong> <a href="mailto:${escapeHtml(input.email)}">${escapeHtml(input.email)}</a></p>
 <p style="margin:0 0 16px;color:#666"><strong>Received:</strong> ${escapeHtml(received)}</p>
 <p style="margin:0 0 4px"><strong>Message:</strong></p>
-<div style="white-space:pre-wrap;border-left:3px solid #b6f23a;padding-left:12px">${escapeHtml(input.message)}</div>
+<div style="white-space:pre-wrap;border-left:3px solid #a3d65f;padding-left:12px">${escapeHtml(input.message)}</div>
 </div>`;
 
   try {

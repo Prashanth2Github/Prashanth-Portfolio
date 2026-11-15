@@ -27,11 +27,12 @@ const EVENTS: Event[] = [
 
 type Line = Event & { seq: number };
 
-const icon: Record<Status, string> = { ok: "✓", run: "◐", fail: "✕" };
 const tone: Record<Status, string> = { ok: "text-signal", run: "text-run", fail: "text-fail" };
 const VISIBLE = 6;
 
-const initialLines: Line[] = EVENTS.slice(0, VISIBLE).map((e, i) => ({
+/** Opens mid-story: a cutover that timed out and the retry now running. */
+const FIRST = 2;
+const initialLines: Line[] = EVENTS.slice(FIRST, FIRST + VISIBLE).map((e, i) => ({
   ...(e.resolvesTo && i < VISIBLE - 1 ? { ...e, ...e.resolvesTo } : e),
   seq: 1040 + i,
 })).reverse();
@@ -41,7 +42,7 @@ export function EventStream() {
   const onScreen = useOnScreen(ref);
   const reduce = useReducedMotion();
   const [lines, setLines] = useState<Line[]>(initialLines);
-  const cursor = useRef(VISIBLE);
+  const cursor = useRef(FIRST + VISIBLE);
   const seq = useRef(1040 + VISIBLE);
 
   useEffect(() => {
@@ -70,29 +71,31 @@ export function EventStream() {
   }, [onScreen, reduce]);
 
   return (
-    <div ref={ref} className="pane brackets" data-active="true">
+    <div ref={ref} className="pane">
       <div className="pane-head">
-        <p className="label flex items-center gap-2.5">
-          <span className="status-dot text-signal" data-live aria-hidden="true" />
-          event-stream
+        <p className="text-[0.875rem] font-medium text-ink">Event stream</p>
+        <p className="label flex items-center gap-4">
+          <span className="hidden items-center gap-1.5 sm:flex"><span className="state text-signal" aria-hidden="true" /> ok</span>
+          <span className="hidden items-center gap-1.5 sm:flex"><span className="state text-run" aria-hidden="true" /> running</span>
+          <span className="hidden items-center gap-1.5 sm:flex"><span className="state text-fail" aria-hidden="true" /> failed</span>
+          <span className="text-muted sm:hidden">Simulated</span>
         </p>
-        <p className="label border border-line-strong px-1.5 text-run">simulated</p>
       </div>
-      <ol className="min-h-[16.5rem] px-4 py-2 font-mono text-[0.8125rem] leading-none sm:text-[0.8125rem]" aria-label="Simulated backend event stream">
+      <ol className="min-h-[18.75rem] px-4 py-2 font-mono text-[0.8125rem] leading-none" aria-label="Simulated backend event stream">
         <AnimatePresence initial={false} mode="popLayout">
           {lines.map((l) => (
             <m.li
               key={l.seq}
               layout="position"
-              initial={{ opacity: 0, y: -14 }}
+              initial={{ opacity: 0, y: -6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className="grid grid-cols-[1.25rem_1fr_auto] items-center gap-2 border-b border-line/70 py-[0.8rem] last:border-0 sm:grid-cols-[3.25rem_1.25rem_1fr_auto]"
+              transition={{ duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
+              className="grid h-12 grid-cols-[1rem_1fr_auto] items-center gap-3 border-b border-line last:border-0 sm:grid-cols-[3rem_1rem_1fr_auto]"
             >
-              <span className="hidden text-faint sm:block">#{l.seq}</span>
-              <span className={cn("text-center", tone[l.status])}>
-                <span aria-hidden="true">{icon[l.status]}</span>
+              <span className="hidden text-faint tabular-nums sm:block">{l.seq}</span>
+              <span className={cn("flex items-center", tone[l.status])}>
+                <span className="state" aria-hidden="true" />
                 <span className="sr-only">{l.status === "ok" ? "completed" : l.status === "run" ? "processing" : "failed"}</span>
               </span>
               <span className="truncate text-ink">{l.name}</span>
@@ -101,8 +104,8 @@ export function EventStream() {
           ))}
         </AnimatePresence>
       </ol>
-      <p className="border-t border-line px-4 py-2.5 text-[0.75rem] leading-snug text-faint">
-        Illustrative UI simulation of the kind of events my work produces — not live production data.
+      <p className="border-t border-line px-4 py-3 text-[0.8125rem] leading-snug text-faint">
+        A simulation of the kind of events my work produces, not production data
       </p>
     </div>
   );

@@ -6,48 +6,44 @@ import { ContactForm } from "./contact-form";
 
 export function Contact() {
   return (
-    <section id="contact" aria-labelledby="contact-title" className="relative scroll-mt-16 overflow-hidden py-24 md:py-40">
-      <div aria-hidden="true" className="grid-lines pointer-events-none absolute inset-0" style={{ maskImage: "radial-gradient(ellipse 70% 70% at 50% 60%, #000, transparent)" }} />
-      <div className="wrap relative">
-        <Reveal>
-          <p className="label mb-6 flex items-center gap-3">
-            <span className="text-signal">{"// "}07</span>
-            <span aria-hidden="true" className="h-px w-8 bg-line-strong" />
-            Start a conversation
+    <section id="contact" aria-labelledby="contact-title" className="scroll-mt-16 border-t border-line py-24 md:py-32">
+      <div className="wrap grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <Reveal className="lg:col-span-5">
+          <p className="label mb-4 flex items-center gap-2">
+            <span className="tabular-nums">07</span>
+            <span aria-hidden="true" className="h-px w-4 bg-line-strong" />
+            <span className="text-muted">Contact</span>
           </p>
-          <h2 id="contact-title" className="display text-[clamp(2.75rem,8vw,7.5rem)] leading-[0.92] font-semibold" style={{ fontVariationSettings: '"wdth" 100' }}>
-            Have a system that
-            <br />
-            needs to hold up<span className="text-signal">?</span>
+          <h2 id="contact-title" className="display text-[clamp(2rem,3.4vw,2.75rem)] leading-[1.08] tracking-[-0.03em]">
+            Get in touch about backend, identity or infrastructure work
           </h2>
-          <p className="mt-8 max-w-xl text-[1.125rem] leading-relaxed text-muted">
-            Backend services, identity, workflows or infrastructure — I&apos;m happy to talk engineering. Email me directly, or send a message below.
+          <p className="mt-6 max-w-[30rem] text-[1.0625rem] leading-relaxed text-muted">
+            Email is the quickest way to reach me. The form goes to the same inbox, and I reply by email.
           </p>
-        </Reveal>
 
-        <Reveal className="mt-12 border-t border-line pt-8" delay={0.1}>
-          <a href={`mailto:${profile.email}`} className="display group inline-block text-[clamp(1.25rem,3.6vw,2.75rem)] leading-tight font-semibold break-all text-ink sm:break-normal">
-            <span className="bg-[linear-gradient(var(--color-signal),var(--color-signal))] bg-[length:0%_2px] bg-left-bottom bg-no-repeat pb-1 transition-[background-size] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:bg-[length:100%_2px]">
-              {profile.email}
-            </span>
+          <a
+            href={`mailto:${profile.email}`}
+            className="display link mt-10 inline-block text-[clamp(1.125rem,1.9vw,1.5rem)] leading-tight break-all text-ink sm:break-normal"
+          >
+            {profile.email}
           </a>
-          <div className="mt-8">
+          <div className="mt-6">
             <ContactActions />
           </div>
-          <p className="label mt-6 text-faint">{profile.location} · IST (UTC+5:30)</p>
+          <p className="label mt-6 flex items-center gap-2">
+            <span className="state text-signal" aria-hidden="true" />
+            {profile.location} · IST, UTC+5:30
+          </p>
         </Reveal>
 
-        <Reveal className="mt-16 grid gap-8 border-t border-line pt-8 lg:grid-cols-12 lg:gap-16" delay={0.12}>
-          <div className="lg:col-span-4">
-            <p className="label mb-3 text-faint">{"// "}Message</p>
-            <h3 id="contact-form-title" className="display text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.05] font-semibold">
+        <Reveal className="lg:col-span-7" delay={0.08}>
+          <div className="pane p-6 md:p-8">
+            <h3 id="contact-form-title" className="display text-[1.5rem] leading-tight tracking-[-0.02em]">
               Send a Message
             </h3>
-            <p className="mt-4 max-w-sm text-[1rem] leading-relaxed text-muted">
-              Prefer a form? Leave your name, email and message — it comes straight to my inbox and I&apos;ll reply by email.
+            <p className="mt-2 mb-8 text-[0.9375rem] leading-relaxed text-muted">
+              Your name, email and message come straight to my inbox.
             </p>
-          </div>
-          <div className="lg:col-span-8">
             <ContactForm />
           </div>
         </Reveal>

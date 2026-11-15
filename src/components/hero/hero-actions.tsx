@@ -1,45 +1,28 @@
 "use client";
 
-import { ArrowDown, ArrowUpRight, Download } from "@/components/ui/icons";
-import { Magnetic } from "@/components/ui/magnetic";
+import { ArrowDown, Download } from "@/components/ui/icons";
 import { profile } from "@/content/profile";
 import { scrollToId } from "@/lib/utils";
 
+/** One primary and one secondary action. Contact lives in the navigation and the closing section. */
 export function HeroActions() {
   return (
-    <div className="fade-up flex flex-wrap gap-3" style={{ "--d": "700ms" } as React.CSSProperties}>
-      <Magnetic>
-        <a
-          href="#experience"
-          className="btn btn-primary"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToId("experience");
-          }}
-        >
-          Explore my work
-          <ArrowDown size={15} />
-        </a>
-      </Magnetic>
-      <Magnetic>
-        <a href={profile.resume} download={profile.resumeFileName} className="btn">
-          <Download size={15} />
-          Download résumé
-        </a>
-      </Magnetic>
-      <Magnetic>
-        <a
-          href="#contact"
-          className="btn"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToId("contact");
-          }}
-        >
-          Contact me
-          <ArrowUpRight size={15} className="btn-arrow" />
-        </a>
-      </Magnetic>
+    <div className="fade-up flex flex-wrap gap-3" style={{ "--d": "120ms" } as React.CSSProperties}>
+      <a
+        href="#experience"
+        className="btn btn-primary"
+        onClick={(e) => {
+          e.preventDefault();
+          scrollToId("experience");
+        }}
+      >
+        See my work
+        <ArrowDown size={16} />
+      </a>
+      <a href={profile.resume} download={profile.resumeFileName} className="btn">
+        <Download size={16} />
+        Download résumé
+      </a>
     </div>
   );
 }

@@ -7,8 +7,8 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const dynamic = "force-static";
 
+/** Same direction as the site: graphite ground, one square state marker, plain type. */
 export default function OpengraphImage() {
-  const grid = "rgba(236,232,223,0.06)";
   return new ImageResponse(
     (
       <div
@@ -18,30 +18,26 @@ export default function OpengraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "64px 72px",
-          background: "#0b0d0c",
-          backgroundImage: `linear-gradient(to right, ${grid} 1px, transparent 1px), linear-gradient(to bottom, ${grid} 1px, transparent 1px)`,
-          backgroundSize: "64px 64px",
-          color: "#ece8df",
+          padding: "72px 80px",
+          background: "#0c0d0d",
+          color: "#ecebe6",
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 22, letterSpacing: 2, color: "#9a9a90" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-            <div style={{ width: 12, height: 12, background: "#b6f23a" }} />
-            <span style={{ color: "#b6f23a" }}>{`// ${profile.role.toUpperCase()}`}</span>
-          </div>
-          <span>CONTROL PLANE</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 28, color: "#ecebe6" }}>
+          <div style={{ width: 14, height: 14, borderRadius: 2, background: "#a3d65f" }} />
+          <span>{`${profile.currentTitle} at ${profile.company}`}</span>
+          <span style={{ color: "#85857f" }}>· Hyderabad</span>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", fontSize: 132, fontWeight: 800, lineHeight: 0.9, letterSpacing: -4 }}>
-          <span>PRASHANTH</span>
-          <span style={{ display: "flex" }}>
-            BONKURU<span style={{ color: "#b6f23a" }}>.</span>
+        <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+          <span style={{ fontSize: 104, fontWeight: 500, lineHeight: 1, letterSpacing: -4 }}>{profile.name}</span>
+          <span style={{ maxWidth: 940, fontSize: 34, lineHeight: 1.35, color: "#a6a69f" }}>
+            Go services, multi-tenant authentication across LDAP, OIDC and SAML, and distributed workflows with Temporal
           </span>
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", fontSize: 26, color: "#9a9a90" }}>
-          <span style={{ maxWidth: 760, color: "#ece8df" }}>Backend systems · identity · workflows · infrastructure</span>
-          <span>Go · REST · Temporal · OIDC · SAML</span>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 24, color: "#85857f" }}>
+          <span>Backend · identity · workflows · infrastructure</span>
+          <span>2× Oracle Cloud Professional 2025</span>
         </div>
       </div>
     ),

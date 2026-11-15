@@ -8,15 +8,9 @@ export function Credentials() {
       <SectionHeading
         id="credentials-title"
         number="05"
-        eyebrow="Earned, not claimed"
-        title={
-          <>
-            Credentials,
-            <br />
-            <span className="text-muted">with receipts.</span>
-          </>
-        }
-        note="Two Oracle Cloud Infrastructure Professional certifications from 2025, plus programming foundations — each with the original certificate."
+        eyebrow="Certifications"
+        title="Oracle Cloud certified in generative AI and data science"
+        note="Both professional certifications earned in 2025 and valid until 2027, plus NPTEL, Cisco and Infosys programming certificates. Each original is one click away."
       />
       <CredentialsGrid />
     </section>

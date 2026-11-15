@@ -167,7 +167,7 @@ export function MigrationWorkflow() {
     <div ref={ref} id="sim-migration" className="pane brackets scroll-mt-28" data-active="true">
       <div className="pane-head flex-wrap">
         <p className="label">
-          <span className="text-signal">SIM-01</span> · VM migration workflow
+          <span className="text-faint">SIM-01</span> · VM migration workflow
         </p>
         <p className={cn("label flex items-center gap-2", pl.tone)} aria-live="polite">
           <span className="status-dot" data-live={busy || undefined} aria-hidden="true" />
@@ -177,13 +177,13 @@ export function MigrationWorkflow() {
 
       <div className="flex flex-wrap items-center gap-2 border-b border-line p-4 md:px-6">
         <button type="button" className="btn btn-primary btn-sm" onClick={() => run(false)} disabled={busy}>
-          <Play size={12} /> Run migration
+          <Play size={16} /> Run migration
         </button>
         <button type="button" className="btn btn-sm border-fail/60 text-fail" onClick={() => run(true)} disabled={busy}>
-          <Bolt size={14} /> Simulate failure
+          <Bolt size={16} /> Simulate failure
         </button>
         <button type="button" className="btn btn-sm" onClick={reset}>
-          <Reset size={14} /> Reset
+          <Reset size={16} /> Reset
         </button>
         <p className="label ml-auto hidden text-faint lg:block">Conceptual model · not Karios&apos;s implementation</p>
       </div>
@@ -191,7 +191,7 @@ export function MigrationWorkflow() {
       <div className="p-4 md:p-6">
         {/* Main rail */}
         <p className="label mb-3 text-faint">Happy path</p>
-        <ol className="grid gap-px border border-line bg-line md:grid-cols-5">
+        <ol className="grid gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-5">
           {migrationStages.map((s, i) => {
             const st = stages[i]!;
             const here = token.rail === "main" && token.index === i;
@@ -204,7 +204,7 @@ export function MigrationWorkflow() {
                     {statusText[st]}
                   </span>
                 </div>
-                <p className={cn("display mt-2 text-[1.25rem] font-semibold", st === "undone" && "text-muted line-through decoration-fail/70")}>{s.label}</p>
+                <p className={cn("display mt-2 text-[1.25rem] font-medium", st === "undone" && "text-muted line-through decoration-fail/70")}>{s.label}</p>
                 <p className="mt-1 text-[0.875rem] leading-snug text-muted">{s.detail}</p>
                 {i === TRANSFER && (st === "run" || st === "fail" || st === "ok" || st === "undone") ? (
                   <div className="mt-3 h-1 w-full bg-line" role="progressbar" aria-label="Transfer progress" aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}>
@@ -222,14 +222,14 @@ export function MigrationWorkflow() {
           <p className="label mb-3 flex items-center gap-2 text-faint">
             <span className="text-fail">↳</span> Failure path
           </p>
-          <ol className="grid gap-px border border-line bg-line sm:grid-cols-2 md:w-[calc(40%-1px)]">
+          <ol className="grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2 md:w-[calc(40%-1px)]">
             {compensationStages.map((s, i) => {
               const st = comp[i]!;
               const here = token.rail === "comp" && token.index === i;
               return (
                 <li key={s.id} className={cn("relative bg-bg p-4", st === "run" && "bg-surface")}>
                   <span aria-hidden="true" className={cn("absolute inset-x-0 top-0 h-[2px] transition-colors duration-500", st === "pending" ? "bg-line-strong" : st === "run" ? "bg-run" : "bg-fail")} />
-                  <p className={cn("display text-[1.125rem] font-semibold", st !== "pending" && "text-fail")}>{s.label}</p>
+                  <p className={cn("display text-[1.125rem] font-medium", st !== "pending" && "text-fail")}>{s.label}</p>
                   <p className="mt-1 text-[0.875rem] leading-snug text-muted">{s.detail}</p>
                   {here ? <VmToken failed /> : null}
                 </li>

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Geist, JetBrains_Mono } from "next/font/google";
+import { Geist, JetBrains_Mono } from "next/font/google";
 import type { ReactNode } from "react";
 
 import { LazyCommandPalette } from "@/components/layout/lazy-command-palette";
@@ -11,7 +11,6 @@ import { seo, siteUrl } from "@/content/site";
 
 import "./globals.css";
 
-const archivo = Archivo({ subsets: ["latin"], axes: ["wdth"], variable: "--font-archivo", display: "swap" });
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains", display: "swap" });
 
@@ -53,7 +52,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b0d0c",
+  themeColor: "#0c0d0d",
   colorScheme: "dark",
   width: "device-width",
   initialScale: 1,
@@ -78,7 +77,7 @@ const personJsonLd = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${archivo.variable} ${geist.variable} ${jetbrains.variable}`}>
+    <html lang="en" className={`${geist.variable} ${jetbrains.variable}`}>
       <body>
         <Providers>
           <SiteHeader />

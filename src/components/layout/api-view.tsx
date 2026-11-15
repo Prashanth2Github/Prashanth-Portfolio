@@ -85,19 +85,19 @@ export function ApiView() {
 
   return (
     <section className="wrap pt-[calc(var(--header-h)+3rem)] pb-24" aria-label="API view of this portfolio">
-      <m.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
+      <m.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.36, ease: [0.22, 1, 0.36, 1] }}>
         <p className="label mb-4">
-          <span className="text-signal">{"// "}API VIEW</span> — the same portfolio, as a response. The endpoint is real.
+          <span className="text-ink">API view</span> · the same portfolio as a JSON response, served by a real endpoint
         </p>
         <div className="pane">
           <div className="pane-head flex-wrap">
             <p className="font-mono text-[0.875rem]">
-              <span className="mr-3 bg-signal px-1.5 py-0.5 text-bg">GET</span>
+              <span className="mr-3 rounded-md border border-line-strong bg-surface-2 px-1.5 py-0.5 text-ink">GET</span>
               /v1/engineer/prashanth
             </p>
             <p className="label flex flex-wrap items-center gap-x-4 gap-y-1">
               <span className="flex items-center gap-2 text-signal">
-                <span className="status-dot" aria-hidden="true" /> 200 OK
+                <span className="state" aria-hidden="true" /> 200 OK
               </span>
               <span>application/json</span>
               <span>{(bytes / 1024).toFixed(1)} KB</span>
@@ -114,10 +114,10 @@ export function ApiView() {
             Back to human view
           </button>
           <button type="button" className="btn" onClick={async () => notify((await copyText(json)) ? "JSON copied" : "Copy failed")}>
-            <Copy size={15} /> Copy JSON
+            <Copy size={16} /> Copy JSON
           </button>
           <a className="btn" href="/v1/engineer/prashanth" target="_blank" rel="noopener">
-            Open raw endpoint <ArrowUpRight size={15} className="btn-arrow" />
+            Open raw endpoint <ArrowUpRight size={16} className="btn-arrow" />
           </a>
         </div>
       </m.div>

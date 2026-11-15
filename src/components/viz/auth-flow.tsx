@@ -50,7 +50,7 @@ export function AuthFlow() {
     <div ref={ref} id="sim-auth" className="pane brackets flex w-full scroll-mt-28 flex-col" data-active="true">
       <div className="pane-head">
         <p className="label">
-          <span className="text-signal">SIM-02</span> · Multi-tenant authentication
+          <span className="text-faint">SIM-02</span> · Multi-tenant authentication
         </p>
         <p className={cn("label flex items-center gap-2", done ? "text-signal" : "text-run")}>
           <span className="status-dot" aria-hidden="true" />
@@ -68,7 +68,7 @@ export function AuthFlow() {
               aria-selected={protocol === p}
               onClick={() => setProtocol(p)}
               className={cn(
-                "relative min-h-9 px-4 font-mono text-[0.8125rem] tracking-[0.06em] transition-colors",
+                "relative min-h-9 px-4 font-mono text-[0.8125rem] transition-colors",
                 protocol === p ? "text-bg" : "text-muted hover:text-ink",
               )}
             >
@@ -78,7 +78,7 @@ export function AuthFlow() {
           ))}
         </div>
         <button type="button" className="btn btn-sm" onClick={() => setCycle((c) => c + 1)}>
-          <Reset size={14} /> Replay
+          <Reset size={16} /> Replay
         </button>
       </div>
 

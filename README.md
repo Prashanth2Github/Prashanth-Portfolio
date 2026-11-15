@@ -62,6 +62,18 @@ The "Send a Message" form posts to `src/app/api/contact/route.ts`, which validat
 
 Replies: each email sets `Reply-To` to the visitor's address, so you can answer straight from your inbox.
 
+## Design system
+
+Direction: **exact, calm, quietly technical** — "the on-call desk". Tokens live in `src/app/globals.css` (`@theme`).
+
+- **Colour:** one graphite ramp with a faint green tint (`bg`, `surface`, `surface-2`, `line`) and three text roles (`ink`, `muted`, `faint`). The accent `signal` marks state only (ok, current, valid); `run` and `fail` are the in-progress and failure states.
+- **Type:** Geist for everything, JetBrains Mono for meta, figures and code. Weights 400/500, sentence case, no tracked-out labels.
+- **Signature:** the small square state marker (`.state`), used wherever something has a state.
+- **Shapes:** controls 8px, tags 6px, cards/panes 16px. Depth comes from surface steps and hairlines, not shadows or glows.
+- **Motion:** one curve, `cubic-bezier(0.22, 1, 0.36, 1)`; 120–180ms for hover, ≤500ms for entrances; reveals rise 8px once. Everything respects `prefers-reduced-motion`.
+
+The redesign followed the [unslop](https://github.com/heydamir/unslop) method by Damir Sokolovsky (CC BY 4.0).
+
 ## Structure
 
 ```

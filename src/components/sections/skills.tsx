@@ -10,15 +10,9 @@ export function Skills() {
         <SectionHeading
           id="skills-title"
           number="04"
-          eyebrow="Tools in context"
-          title={
-            <>
-              A connected
-              <br />
-              <span className="text-muted">toolkit.</span>
-            </>
-          }
-          note="Pick a technology to see exactly where it was used — in my work, my projects or my certifications. No percentage bars."
+          eyebrow="Skills"
+          title="Every skill, linked to where I used it"
+          note="Pick a category, then a technology, to see the workstream, project or certificate behind it."
         />
         <Reveal>
           <SkillsExplorer />

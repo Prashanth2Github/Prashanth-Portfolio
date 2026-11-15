@@ -11,15 +11,9 @@ export function Projects() {
       <SectionHeading
         id="projects-title"
         number="03"
-        eyebrow="Selected builds"
-        title={
-          <>
-            Projects with
-            <br />
-            <span className="text-muted">a point of view.</span>
-          </>
-        }
-        note="Prediction, relational systems and accessible hardware — each presented as the problem, my contribution and the decisions behind it."
+        eyebrow="Projects"
+        title="Three projects, from LSTM prioritisation to an assistive glove"
+        note="Each shows the problem, my contribution and the decisions behind it. The diagrams illustrate how each system fits together."
       />
 
       <div className="space-y-6 md:space-y-8">
@@ -33,15 +27,15 @@ export function Projects() {
                 </div>
                 <div className={cn("flex flex-col p-5 sm:p-7 lg:col-span-6 lg:p-10", flip && "lg:order-1")}>
                   <p className="label flex flex-wrap justify-between gap-2">
-                    <span className="text-signal">{p.code}</span>
+                    <span className="tabular-nums">{p.code}</span>
                     <span className="text-faint">{p.category}</span>
                   </p>
-                  <h3 className="display mt-5 text-[clamp(1.75rem,3.2vw,2.625rem)] leading-[1.02] font-semibold" style={{ fontVariationSettings: '"wdth" 96' }}>
+                  <h3 className="display mt-5 text-[clamp(1.75rem,3.2vw,2.625rem)] leading-[1.02] font-medium">
                     {p.title}
                   </h3>
                   <p className="mt-4 text-[1.0625rem] leading-relaxed text-muted">{p.summary}</p>
 
-                  <dl className="mt-6 grid gap-px border border-line bg-line sm:grid-cols-2">
+                  <dl className="mt-6 grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2">
                     <div className="bg-bg p-4">
                       <dt className="label mb-1.5 text-faint">Problem</dt>
                       <dd className="text-[0.9375rem] leading-snug text-ink">{p.problem}</dd>
@@ -56,7 +50,7 @@ export function Projects() {
                   <ol className="space-y-2">
                     {p.decisions.map((d, j) => (
                       <li key={d} className="grid grid-cols-[2rem_1fr] text-[0.9375rem] leading-relaxed text-muted">
-                        <span className="label pt-[0.2em] text-signal">0{j + 1}</span>
+                        <span className="label pt-[0.2em] tabular-nums">0{j + 1}</span>
                         {d}
                       </li>
                     ))}
@@ -74,12 +68,12 @@ export function Projects() {
                     <div className="mt-6 flex flex-wrap gap-3">
                       {p.repo ? (
                         <a href={p.repo} target="_blank" rel="noreferrer" className="btn btn-sm">
-                          <GitHub size={14} /> Source
+                          <GitHub size={16} /> Source
                         </a>
                       ) : null}
                       {p.demo ? (
                         <a href={p.demo} target="_blank" rel="noreferrer" className="btn btn-sm">
-                          Live demo <ArrowUpRight size={14} className="btn-arrow" />
+                          Live demo <ArrowUpRight size={16} className="btn-arrow" />
                         </a>
                       ) : null}
                     </div>

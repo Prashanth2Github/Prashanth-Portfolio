@@ -20,7 +20,7 @@ const EMPTY: ContactInput = { name: "", email: "", message: "" };
 const FIELD_ORDER: ContactField[] = ["name", "email", "message"];
 
 const fieldClass =
-  "w-full rounded-[2px] border border-line-strong bg-bg/70 px-4 py-3 text-[1rem] leading-normal text-ink transition-colors duration-200 placeholder:text-faint hover:border-muted focus:border-signal aria-[invalid=true]:border-fail disabled:opacity-60";
+  "w-full rounded-lg border border-line-strong bg-bg px-4 py-3 text-[1rem] leading-normal text-ink transition-colors duration-200 placeholder:text-faint hover:border-muted focus:border-signal aria-[invalid=true]:border-fail disabled:opacity-60";
 
 export function ContactForm() {
   const [values, setValues] = useState<ContactInput>(EMPTY);
@@ -100,11 +100,11 @@ export function ContactForm() {
 
   if (status === "sent") {
     return (
-      <div ref={successRef} tabIndex={-1} role="status" className="border border-line bg-bg/70 p-6 outline-none md:p-8">
-        <p className="label flex items-center gap-2 text-signal">
-          <Check size={14} /> Message delivered
+      <div ref={successRef} tabIndex={-1} role="status" className="rounded-xl border border-line bg-bg p-6 outline-none md:p-8">
+        <p className="flex items-center gap-2 text-[0.875rem] text-signal">
+          <Check size={16} /> Message delivered
         </p>
-        <p className="display mt-3 text-[1.5rem] leading-tight font-semibold">Thanks — your message is on its way.</p>
+        <p className="display mt-3 text-[1.5rem] leading-tight font-medium">Thanks — your message is on its way.</p>
         <p className="mt-2 text-[1rem] leading-relaxed text-muted">
           I&apos;ll reply to <span className="text-ink">{sentTo}</span> as soon as I can.
         </p>
@@ -207,11 +207,10 @@ export function ContactForm() {
               </>
             ) : (
               <>
-                Send Message <ArrowRight size={14} />
+                Send Message <ArrowRight size={16} />
               </>
             )}
           </button>
-          <p className="label text-faint">Goes straight to my inbox</p>
         </div>
 
         <p role="alert" aria-live="assertive" className={cn("text-[0.9375rem] leading-snug text-fail", !serverError && "sr-only")}>

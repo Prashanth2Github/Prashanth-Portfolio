@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, m, useScroll, useSpring } from "motion/react";
+import { AnimatePresence, m } from "motion/react";
 import { useEffect, useState } from "react";
 
 import { useApp } from "@/components/providers";
@@ -11,6 +11,7 @@ import { useActiveSection } from "@/lib/hooks";
 import { cn, scrollToId } from "@/lib/utils";
 
 const ids = sections.map((s) => s.id);
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 export function useGo() {
   const { view, setView } = useApp();
@@ -22,10 +23,11 @@ export function useGo() {
   };
 }
 
+/** Human / API switch — a segmented control; the active segment is one surface step up. */
 export function ViewToggle({ className }: { className?: string }) {
   const { view, setView } = useApp();
   return (
-    <div role="group" aria-label="Page view" className={cn("relative flex border border-line p-0.5", className)}>
+    <div role="group" aria-label="Page view" className={cn("flex rounded-lg border border-line bg-bg p-0.5", className)}>
       {(["human", "api"] as const).map((v) => (
         <button
           key={v}
@@ -33,13 +35,10 @@ export function ViewToggle({ className }: { className?: string }) {
           aria-pressed={view === v}
           onClick={() => setView(v)}
           className={cn(
-            "relative z-10 min-h-8 px-2.5 font-mono text-[0.75rem] tracking-[0.06em] uppercase transition-colors",
-            view === v ? "text-bg" : "text-muted hover:text-ink",
+            "min-h-8 rounded-md px-3 text-[0.8125rem] transition-[color,background-color] duration-150",
+            view === v ? "bg-surface-2 text-ink shadow-[inset_0_1px_0_rgb(255_255_255/0.06)]" : "text-faint hover:text-ink",
           )}
         >
-          {view === v ? (
-            <m.span layoutId="view-pill" className="absolute inset-0 -z-10 bg-signal" transition={{ type: "spring", stiffness: 500, damping: 38 }} />
-          ) : null}
           {v === "human" ? "Human" : "API"}
         </button>
       ))}
@@ -53,11 +52,14 @@ export function SiteHeader() {
   const go = useGo();
   const [menuOpen, setMenuOpen] = useState(false);
   const [mod, setMod] = useState("Ctrl");
-  const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30, restDelta: 0.001 });
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     if (/Mac|iPhone|iPad/.test(navigator.platform)) setMod("⌘");
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   // Switching between Human and API views closes the mobile menu so the new view is visible.
@@ -77,13 +79,16 @@ export function SiteHeader() {
 
   return (
     <>
-      <a href="#main" className="sr-only-focusable fixed top-2 left-2 z-[100] bg-signal px-4 py-2 font-mono text-sm text-bg">
+      <a href="#main" className="sr-only-focusable fixed top-2 left-2 z-[100] rounded-md bg-ink px-4 py-2 text-sm text-bg">
         Skip to content
       </a>
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-bg/80 backdrop-blur-md supports-[backdrop-filter]:bg-bg/70">
-        <m.div aria-hidden="true" className="absolute inset-x-0 top-0 h-[2px] origin-left bg-signal" style={{ scaleX: progress }} />
-        <div className="flex h-[var(--header-h)] items-center gap-4 px-[var(--gutter)]">
-          {/* Monogram + live section index */}
+      <header
+        className={cn(
+          "fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color] duration-200",
+          scrolled || menuOpen ? "border-line bg-bg/95" : "border-transparent bg-bg/0",
+        )}
+      >
+        <div className="mx-auto flex h-[var(--header-h)] w-[min(100%-var(--gutter)*2,76rem)] items-center gap-6">
           <a
             href="#top"
             onClick={(e) => {
@@ -91,41 +96,15 @@ export function SiteHeader() {
               if (view === "api") return;
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
-            className="display shrink-0 text-[1.375rem] leading-none font-bold"
-            title={`${profile.name} — back to top`}
+            className="flex shrink-0 items-center gap-2.5 text-[1rem] leading-none font-medium tracking-[-0.01em]"
+            title="Back to top"
           >
-            PB<span className="text-signal">.</span>
-            <span className="sr-only"> — {profile.name}, back to top</span>
+            <span aria-hidden="true" className="state text-signal" />
+            {profile.name}
           </a>
-          <span aria-hidden="true" className="hidden h-5 w-px bg-line-strong sm:block" />
-          <div className="label hidden min-w-[9.5rem] overflow-hidden sm:block" aria-live="polite">
-            <AnimatePresence mode="popLayout" initial={false}>
-              <m.span
-                key={view === "api" ? "api" : (current?.id ?? "index")}
-                className="block whitespace-nowrap"
-                initial={{ y: "100%", opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: "-100%", opacity: 0 }}
-                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              >
-                {view === "api" ? (
-                  <>
-                    <span className="text-signal">GET</span> /v1/engineer
-                  </>
-                ) : (
-                  <>
-                    <span className="text-signal">{current?.number ?? "00"}</span>
-                    <span className="text-faint"> / 07 · </span>
-                    {current?.label ?? "Index"}
-                  </>
-                )}
-              </m.span>
-            </AnimatePresence>
-          </div>
 
-          {/* Desktop navigation with sliding pill */}
           <nav aria-label="Primary" className="ml-auto hidden xl:block">
-            <ul className="flex items-center">
+            <ul className="flex items-center gap-1">
               {sections.map((s) => {
                 const isActive = current?.id === s.id;
                 return (
@@ -138,18 +117,17 @@ export function SiteHeader() {
                       }}
                       aria-current={isActive ? "true" : undefined}
                       className={cn(
-                        "relative flex min-h-9 items-center gap-1.5 px-3 font-mono text-[0.75rem] tracking-[0.06em] uppercase transition-colors",
-                        isActive ? "text-ink" : "text-muted hover:text-ink",
+                        "relative flex min-h-9 items-center rounded-md px-3 text-[0.875rem] transition-colors duration-150",
+                        isActive ? "text-ink" : "text-faint hover:text-ink",
                       )}
                     >
                       {isActive ? (
                         <m.span
-                          layoutId="nav-pill"
-                          className="absolute inset-0 -z-10 border border-line-strong bg-surface-2"
-                          transition={{ type: "spring", stiffness: 420, damping: 36 }}
+                          layoutId="nav-active"
+                          className="absolute inset-0 -z-10 rounded-md bg-surface-2"
+                          transition={{ duration: 0.22, ease: EASE }}
                         />
                       ) : null}
-                      <span className={isActive ? "text-signal" : "text-faint"}>{s.number}</span>
                       {s.label}
                     </a>
                   </li>
@@ -158,26 +136,26 @@ export function SiteHeader() {
             </ul>
           </nav>
 
-          <div className="ml-auto flex items-center gap-2 xl:ml-4">
+          <div className="ml-auto flex items-center gap-2 xl:ml-2">
             <ViewToggle className="hidden md:flex" />
             <button
               type="button"
               onClick={() => setPaletteOpen(true)}
-              className="flex min-h-9 items-center gap-2 border border-line px-2.5 font-mono text-[0.75rem] text-muted transition-colors hover:border-line-strong hover:text-ink"
+              className="flex min-h-9 items-center gap-1 rounded-lg border border-line px-2 text-faint transition-colors duration-150 hover:border-line-strong hover:text-ink"
               aria-keyshortcuts="Control+K Meta+K"
             >
               <span className="sr-only">Open command palette</span>
-              <Search size={15} className="sm:hidden" />
-              <kbd className="hidden font-mono sm:inline">{mod}</kbd>
-              <kbd className="hidden font-mono sm:inline">K</kbd>
+              <Search size={16} className="sm:hidden" />
+              <kbd className="kbd hidden sm:inline-flex">{mod}</kbd>
+              <kbd className="kbd hidden sm:inline-flex">K</kbd>
             </button>
-            <a href={profile.resume} download={profile.resumeFileName} className="btn btn-primary btn-sm hidden sm:inline-flex">
-              <Download size={14} />
+            <a href={profile.resume} download={profile.resumeFileName} className="btn btn-sm hidden sm:inline-flex">
+              <Download size={16} />
               Résumé
             </a>
             <button
               type="button"
-              className="flex size-10 items-center justify-center border border-line text-ink xl:hidden"
+              className="flex size-10 items-center justify-center rounded-lg border border-line text-ink transition-colors hover:border-line-strong xl:hidden"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
@@ -197,22 +175,16 @@ export function SiteHeader() {
             role="dialog"
             aria-modal="true"
             aria-label="Site menu"
-            className="fixed inset-0 top-[var(--header-h)] z-40 flex flex-col overflow-y-auto bg-bg px-[var(--gutter)] pt-6 pb-10 xl:hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            className="fixed inset-0 top-[var(--header-h)] z-40 flex flex-col overflow-y-auto bg-bg px-[var(--gutter)] pt-4 pb-10 xl:hidden"
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2, ease: EASE }}
           >
             <nav aria-label="Mobile">
               <ul>
-                {sections.map((s, i) => (
-                  <m.li
-                    key={s.id}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.04 * i, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    className="border-b border-line"
-                  >
+                {sections.map((s) => (
+                  <li key={s.id} className="border-b border-line">
                     <a
                       href={`#${s.id}`}
                       onClick={(e) => {
@@ -220,19 +192,20 @@ export function SiteHeader() {
                         setMenuOpen(false);
                         go(s.id);
                       }}
-                      className="flex min-h-16 items-baseline gap-4 py-3"
+                      aria-current={current?.id === s.id ? "true" : undefined}
+                      className="flex min-h-14 items-center gap-4 py-2"
                     >
-                      <span className="label text-signal">{s.number}</span>
-                      <span className="display text-[2rem] leading-none font-semibold">{s.label}</span>
+                      <span className="label w-6 tabular-nums">{s.number}</span>
+                      <span className={cn("display text-[1.5rem] leading-none", current?.id === s.id ? "text-ink" : "text-muted")}>{s.label}</span>
                     </a>
-                  </m.li>
+                  </li>
                 ))}
               </ul>
             </nav>
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <ViewToggle />
-              <a href={profile.resume} download={profile.resumeFileName} className="btn btn-primary">
-                <Download size={15} />
+              <a href={profile.resume} download={profile.resumeFileName} className="btn">
+                <Download size={16} />
                 Download résumé
               </a>
             </div>

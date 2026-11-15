@@ -24,7 +24,7 @@ export function SystemsMap() {
       <div className="grid-lines relative border-b border-line lg:col-span-8 lg:border-r lg:border-b-0">
         <div className="pane-head">
           <p className="label">
-            <span className="text-signal">SYS-00</span> · Engineering systems map
+            <span className="text-faint">SYS-00</span> · Engineering systems map
           </p>
           <p className="label hidden text-faint sm:block">Hover or tap a component</p>
         </div>
@@ -54,7 +54,7 @@ export function SystemsMap() {
                       className="hidden fill-muted font-mono sm:block"
                       style={{ fontSize: 1.9, letterSpacing: "0.05em" }}
                     >
-                      {e.label.toUpperCase()}
+                      {e.label}
                     </text>
                   ) : null}
                   {isActive && onScreen && !reduce ? (
@@ -85,9 +85,9 @@ export function SystemsMap() {
                 aria-pressed={isActive}
                 title={n.title}
                 className={cn(
-                  "absolute flex min-h-10 -translate-x-1/2 -translate-y-1/2 items-center gap-2 border px-3 font-mono text-[0.75rem] tracking-[0.06em] uppercase transition-all duration-300 sm:min-h-11 sm:px-4 sm:text-[0.8125rem]",
+                  "absolute flex min-h-10 -translate-x-1/2 -translate-y-1/2 items-center gap-2 rounded-lg border px-3 text-[0.8125rem] transition-[color,background-color,border-color] duration-200 sm:min-h-11 sm:px-4 sm:text-[0.875rem]",
                   isActive
-                    ? "border-signal bg-signal text-bg shadow-[0_0_0_6px_color-mix(in_oklab,var(--color-signal)_14%,transparent)]"
+                    ? "border-signal bg-signal text-bg"
                     : isLinked
                       ? "border-signal/60 bg-bg text-ink"
                       : "border-line-strong bg-bg text-muted hover:text-ink",
@@ -105,7 +105,7 @@ export function SystemsMap() {
       <div className="flex flex-col lg:col-span-4" aria-live="polite">
         <div className="pane-head">
           <p className="label">
-            Node <span className="text-signal">/ {node.label.toUpperCase()}</span>
+            Node · <span className="text-ink">{node.label}</span>
           </p>
           <p className="label text-faint">{connected.size - 1} links</p>
         </div>
@@ -118,7 +118,7 @@ export function SystemsMap() {
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-1 flex-col p-5 md:p-6"
           >
-            <h3 className="display text-[1.75rem] leading-tight font-semibold">{node.title}</h3>
+            <h3 className="display text-[1.75rem] leading-tight font-medium">{node.title}</h3>
             <p className="mt-3 text-[0.9375rem] leading-relaxed text-muted">{node.summary}</p>
             <div className="mt-5 flex flex-wrap gap-1.5">
               {node.tech.map((t) => (
@@ -141,13 +141,13 @@ export function SystemsMap() {
                         window.location.hash = id;
                         scrollToId(id);
                       }}
-                      className="group flex min-h-11 items-center justify-between gap-3 py-2 text-[0.9375rem] text-ink hover:text-signal"
+                      className="group flex min-h-11 items-center justify-between gap-3 py-2 text-[0.9375rem] text-ink transition-colors hover:text-muted"
                     >
                       <span>
                         <span className="label mr-2 text-faint">{ws.code}</span>
                         {ws.title}
                       </span>
-                      <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                      <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
                     </a>
                   </li>
                 );

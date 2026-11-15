@@ -16,9 +16,9 @@ export const profile = {
   resume: "/resume/Prashanth_Bonkuru_Resume.pdf",
   resumeFileName: "Prashanth_Bonkuru_Resume.pdf",
 
-  headline: "Software Engineer building backend systems, intelligent workflows and reliable infrastructure.",
+  headline: "Software engineer building Go services, multi-tenant authentication and distributed workflows",
   intro:
-    "Software Engineer at Karios, Hyderabad. I build Go services and REST APIs, multi-tenant authentication across LDAP, OIDC and SAML, and distributed workflows with Temporal — and I test them end to end, failure paths included.",
+    "I build Go services and REST APIs, multi-tenant authentication across LDAP, OIDC and SAML, and distributed workflows with Temporal — and test them end to end, failure paths included.",
 
   focus: ["Go · REST APIs", "LDAP · OIDC · SAML", "Temporal workflows", "Proxmox · CloudStack", "2× OCI Professional 2025"],
 
