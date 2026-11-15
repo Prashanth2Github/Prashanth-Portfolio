@@ -39,11 +39,28 @@ The résumé served for download is `public/resume/Prashanth_Bonkuru_Resume.pdf`
 
 ## Deploy
 
-Every route is prerendered, so it deploys to Vercel with zero config (or to any Node host via `npm start`). Set the public URL so canonical links, the sitemap, Open Graph tags and JSON-LD point at the real domain:
+Every page is prerendered; the only server code is the contact-form endpoint `POST /api/contact`. Deploy to Vercel (zero config) or any Node host via `npm start`. A purely static host (e.g. GitHub Pages) would serve the site, but the contact form would not work. Set the public URL so canonical links, the sitemap, Open Graph tags and JSON-LD point at the real domain:
 
 ```
 NEXT_PUBLIC_SITE_URL=https://your-domain.example
 ```
+
+## Contact form (email via Resend)
+
+The "Send a Message" form posts to `src/app/api/contact/route.ts`, which validates the input again on the server, applies basic spam checks (hidden honeypot field, minimum fill time, per-IP send limit) and sends the message through the [Resend](https://resend.com) REST API. The API key never reaches the browser. Without a key the endpoint answers `503` and the form tells the visitor to email directly — it never pretends a message was sent.
+
+1. Create a free Resend account — **sign up with `bonkuruprashanth05@gmail.com`** so the test sender can deliver to you.
+2. Create an API key at <https://resend.com/api-keys> (permission: "Sending access").
+3. Copy `.env.example` to `.env.local` and set `RESEND_API_KEY=re_...`. On Vercel, add the same variables under Project → Settings → Environment Variables, then redeploy.
+4. Restart `npm run dev`, submit the form, and check your inbox (and spam folder). Delivery errors are logged in the server console as `[contact] ...`.
+
+| Variable | Required | Default |
+| --- | --- | --- |
+| `RESEND_API_KEY` | yes | — |
+| `CONTACT_TO_EMAIL` | no | `profile.email` (bonkuruprashanth05@gmail.com) |
+| `CONTACT_FROM_EMAIL` | no | `Portfolio Contact <onboarding@resend.dev>` — Resend's test sender, which can only deliver to the address that owns the Resend account. To send from your own address, verify a domain in Resend and set e.g. `Portfolio Contact <contact@your-domain.com>`. |
+
+Replies: each email sets `Reply-To` to the visitor's address, so you can answer straight from your inbox.
 
 ## Structure
 

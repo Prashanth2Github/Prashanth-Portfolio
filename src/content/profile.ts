@@ -29,9 +29,9 @@ export const profile = {
   ],
 
   principles: [
-    { title: "Validate before acting", text: "Requests are checked before anything changes state." },
-    { title: "Design the failure path", text: "Cancellation, compensation and rollback are features, not afterthoughts." },
-    { title: "Leave an event trail", text: "Every success and failure should be visible to the people operating the system." },
+    { title: "Validate before acting", text: "Check inputs and assumptions early — problems are cheapest to fix before they spread." },
+    { title: "Design the failure path", text: "Plan for what can go wrong as carefully as for what should go right." },
+    { title: "Leave an event trail", text: "Make behaviour visible, so issues can be understood and fixed quickly." },
   ],
 
   education: [

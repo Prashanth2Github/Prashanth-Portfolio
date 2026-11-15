@@ -172,3 +172,93 @@ test("certificate viewer opens and closes", async ({ page }) => {
   await page.keyboard.press("Escape");
   await expect(dialog).toBeHidden();
 });
+
+test.describe("contact form", () => {
+  const form = (page: Page) => page.locator("#contact form");
+
+  async function openForm(page: Page) {
+    await page.goto("/");
+    await form(page).scrollIntoViewIfNeeded();
+    await expect(form(page).getByRole("button", { name: "Send Message" })).toBeVisible();
+  }
+
+  async function fill(page: Page, v: { name: string; email: string; message: string }) {
+    await page.getByLabel("Name", { exact: true }).fill(v.name);
+    await page.getByLabel("Email", { exact: true }).fill(v.email);
+    await page.getByLabel("Message", { exact: true }).fill(v.message);
+  }
+
+  test("validates fields in the browser and sends nothing when invalid", async ({ page }) => {
+    let requests = 0;
+    await page.route("**/api/contact", (route) => {
+      requests++;
+      return route.fulfill({ status: 200, json: { ok: true } });
+    });
+    await openForm(page);
+
+    await form(page).getByRole("button", { name: "Send Message" }).click();
+    await expect(page.getByText("Please enter your name.")).toBeVisible();
+    await expect(page.getByText("Please enter your email address.")).toBeVisible();
+    await expect(page.getByText("Please write a message.")).toBeVisible();
+    await expect(page.getByLabel("Name", { exact: true })).toBeFocused();
+
+    await fill(page, { name: "Test Visitor", email: "not-an-email", message: "short" });
+    await expect(page.getByText(/valid email address/)).toBeVisible();
+    await expect(page.getByText(/at least 10 characters/)).toBeVisible();
+    await form(page).getByRole("button", { name: "Send Message" }).click();
+    expect(requests).toBe(0);
+  });
+
+  test("shows a loading state, blocks duplicates, and confirms only after delivery", async ({ page }) => {
+    let requests = 0;
+    let body: Record<string, unknown> = {};
+    await page.route("**/api/contact", async (route) => {
+      requests++;
+      body = route.request().postDataJSON();
+      await new Promise((r) => setTimeout(r, 800));
+      await route.fulfill({ status: 200, json: { ok: true } });
+    });
+    await openForm(page);
+    await fill(page, { name: "Test Visitor", email: "visitor@example.com", message: "Hello Prashanth, this is a test message." });
+
+    const submit = form(page).getByRole("button", { name: "Send Message" });
+    await submit.click();
+    const sending = form(page).getByRole("button", { name: /Sending/ });
+    await expect(sending).toBeDisabled();
+    await page.locator("#contact form").evaluate((f: HTMLFormElement) => f.requestSubmit());
+    await expect(page.getByText("Thanks — your message is on its way.")).toBeVisible();
+    await expect(page.getByText("visitor@example.com")).toBeVisible();
+    expect(requests).toBe(1);
+    expect(body).toMatchObject({ name: "Test Visitor", email: "visitor@example.com", message: "Hello Prashanth, this is a test message.", website: "" });
+  });
+
+  test("shows the server's error and keeps the message when delivery fails", async ({ page }) => {
+    await page.route("**/api/contact", (route) =>
+      route.fulfill({ status: 502, json: { error: "Your message couldn't be delivered right now." } }),
+    );
+    await openForm(page);
+    await fill(page, { name: "Test Visitor", email: "visitor@example.com", message: "Hello Prashanth, this is a test message." });
+    await form(page).getByRole("button", { name: "Send Message" }).click();
+    await expect(form(page).getByRole("alert")).toHaveText("Your message couldn't be delivered right now.");
+    await expect(page.getByText("Thanks — your message is on its way.")).toHaveCount(0);
+    await expect(page.getByLabel("Message", { exact: true })).toHaveValue("Hello Prashanth, this is a test message.");
+    await expect(form(page).getByRole("button", { name: "Send Message" })).toBeEnabled();
+  });
+});
+
+test("contact API rejects invalid and spam submissions before sending", async ({ request }) => {
+  const valid = { name: "Test Visitor", email: "visitor@example.com", message: "Hello Prashanth, this is a test.", website: "", elapsed: 5000 };
+
+  const bad = await request.post("/api/contact", { data: { ...valid, email: "nope", message: "" } });
+  expect(bad.status()).toBe(422);
+  expect((await bad.json()).fields).toMatchObject({ email: expect.any(String), message: expect.any(String) });
+
+  const honeypot = await request.post("/api/contact", { data: { ...valid, website: "https://spam.example" } });
+  expect(honeypot.status()).toBe(400);
+
+  const tooFast = await request.post("/api/contact", { data: { ...valid, elapsed: 200 } });
+  expect(tooFast.status()).toBe(400);
+
+  const malformed = await request.post("/api/contact", { data: "not json", headers: { "Content-Type": "application/json" } });
+  expect(malformed.status()).toBe(400);
+});
